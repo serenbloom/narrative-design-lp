@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ナラティブ設計伴走プログラム</title>
+<style>
+:root{
+  --ink:#153458;
+  --muted:#5C6B78;
+  --paper:#FFFFFF;
+  --tint:#E2F1F4;
+  --tint-2:#EFF8F9;
+  --surface:#FFFFFF;
+  --line:#D7E6EA;
+  --accent:#C89A3C;
+  --accent-ink:#8C6C1F;
+  --accent-soft:#FBF1DC;
+  --accent-soft-line:#EEDBA8;
+  --deep:#153458;
+  --deep-2:#0F2843;
+  --on-deep:#F3F7FA;
+  --on-deep-muted:#AEC2D2;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#EAF1F7;
+    --muted:#9FB0BE;
+    --paper:#0F1319;
+    --tint:#111C27;
+    --tint-2:#0D171F;
+    --surface:#161D25;
+    --line:#26313C;
+    --accent:#E3B45C;
+    --accent-ink:#F0C978;
+    --accent-soft:#2A2110;
+    --accent-soft-line:#3E3319;
+    --deep:#0B2A4A;
+    --deep-2:#081F38;
+    --on-deep:#F3F7FA;
+    --on-deep-muted:#9FB4C6;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#EAF1F7;
+  --muted:#9FB0BE;
+  --paper:#0F1319;
+  --tint:#111C27;
+  --tint-2:#0D171F;
+  --surface:#161D25;
+  --line:#26313C;
+  --accent:#E3B45C;
+  --accent-ink:#F0C978;
+  --accent-soft:#2A2110;
+  --accent-soft-line:#3E3319;
+  --deep:#0B2A4A;
+  --deep-2:#081F38;
+  --on-deep:#F3F7FA;
+  --on-deep-muted:#9FB4C6;
+}
+
+*{box-sizing:border-box;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;
+  line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px;}
+h1,h2,h3{
+  font-family:'Shippori Mincho','Hiragino Mincho ProN','Yu Mincho',serif;
+  font-weight:600;
+  text-wrap:balance;
+  line-height:1.5;
+  margin:0;
+}
+p{margin:0;}
+a{color:inherit;}
+
+/* ---------- sticky header ---------- */
+header.bar{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:10;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);
+}
+.bar-inner{
+  max-width:720px;margin:0 auto;padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.wordmark{font-family:'Shippori Mincho',serif;font-weight:600;font-size:15px;color:var(--ink);letter-spacing:.02em;}
+.bar-cta{
+  font-size:12.5px;font-weight:700;color:var(--on-deep);background:var(--deep);
+  padding:8px 16px;border-radius:999px;white-space:nowrap;text-decoration:none;
+}
+
+/* ---------- section rhythm ---------- */
+.section{padding-block:60px;}
+.section.tint{background:var(--tint);}
+.section.tint2{background:var(--tint-2);}
+.section.deep{background:var(--deep);color:var(--on-deep);}
+.section.deep h2, .section.deep h3{color:var(--on-deep);}
+
+.eyebrow-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:22px;}
+.eyebrow-row .dash{width:26px;height:1px;background:var(--accent-line,var(--accent-soft-line));}
+.eyebrow-row span{font-size:11.5px;letter-spacing:.22em;color:var(--accent-ink);font-weight:700;}
+.section.deep .eyebrow-row span{color:var(--accent);}
+.section.deep .eyebrow-row .dash{background:rgba(255,255,255,.25);}
+
+.badge-icon{
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 26px;
+  background:var(--accent-soft);border:1px solid var(--accent-soft-line);
+}
+.badge-icon svg{width:22px;height:22px;stroke:var(--accent-ink);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+
+.center{text-align:center;}
+h2.title{font-size:clamp(21px,5vw,26px);margin-bottom:14px;}
+.lead{font-size:14.5px;color:var(--muted);max-width:48ch;margin:0 auto;}
+.section.deep .lead{color:var(--on-deep-muted);}
+
+/* ---------- hero ---------- */
+.hero{padding-block:56px 50px;text-align:center;background:linear-gradient(180deg,var(--tint) 0%,var(--paper) 100%);}
+.hero .badge-icon{width:64px;height:64px;}
+.hero .badge-icon svg{width:26px;height:26px;}
+.hero h1{font-size:clamp(23px,6.4vw,31px);margin-top:6px;}
+.hero h1 .line2{display:block;margin-top:14px;font-size:.78em;color:var(--accent-ink);}
+.hero .sub{margin-top:22px;font-size:14.5px;color:var(--muted);max-width:44ch;margin-inline:auto;}
+.meta-row{
+  margin-top:28px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 20px;
+  font-size:13px;color:var(--muted);
+}
+.meta-row b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums;}
+.target-pill{
+  margin:28px auto 0;max-width:420px;
+  background:var(--accent-soft);border:1px solid var(--accent-soft-line);
+  border-radius:14px;padding:14px 18px;font-size:13.5px;color:var(--accent-ink);font-weight:600;
+}
+
+/* pain list */
+.pain-list{max-width:520px;margin:30px auto 0;border-top:1px solid var(--line);}
+.pain-item{display:flex;align-items:flex-start;gap:12px;padding:18px 4px;border-bottom:1px solid var(--line);}
+.pain-item .box{
+  flex:none;width:16px;height:16px;margin-top:3px;border:1.5px solid var(--accent);border-radius:4px;
+}
+.pain-item p{font-size:14px;color:var(--ink);text-align:left;}
+
+/* explainer compare cards */
+.compare-wrap{margin-top:34px;display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch;}
+@media(max-width:560px){.compare-wrap{grid-template-columns:1fr;}
+  .compare-wrap .arrow{transform:rotate(90deg);margin:0 auto;}}
+.compare-card{border-radius:14px;padding:22px 20px;}
+.compare-card.light{background:var(--surface);border:1px solid var(--line);}
+.compare-card.dark{background:var(--deep);color:var(--on-deep);}
+.compare-card .k{font-size:11px;letter-spacing:.08em;margin-bottom:12px;display:block;}
+.compare-card.light .k{color:var(--muted);}
+.compare-card.dark .k{color:var(--accent);}
+.compare-card .t{font-family:'Shippori Mincho',serif;font-size:17px;font-weight:600;margin-bottom:10px;}
+.compare-card p.d{font-size:13.5px;}
+.compare-card.light p.d{color:var(--muted);}
+.compare-card.dark p.d{color:var(--on-deep-muted);}
+.arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:18px;}
+
+.explain-close{
+  margin-top:26px;font-size:14.5px;font-weight:500;
+  padding:18px 20px;background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--accent);border-radius:0 12px 12px 0;
+}
+
+/* outcomes */
+.outcome-grid{margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:520px){.outcome-grid{grid-template-columns:1fr;}}
+.outcome{
+  padding:20px 18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+}
+.outcome .t{font-weight:700;font-size:14.5px;margin-bottom:6px;color:var(--ink);}
+.outcome .d{font-size:12.5px;color:var(--muted);}
+
+/* concept-style formula box (program) */
+.formula-card{
+  margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px 22px;
+}
+.formula-label{text-align:center;font-size:11px;letter-spacing:.1em;color:var(--muted);margin-bottom:16px;}
+.formula-row{display:flex;align-items:center;gap:10px;}
+@media(max-width:520px){.formula-row{flex-direction:column;}
+  .formula-row .fx{transform:rotate(90deg);}}
+.formula-box{
+  flex:1;background:var(--tint);border-radius:10px;padding:16px 14px;text-align:center;
+}
+.formula-box .v{font-family:'Shippori Mincho',serif;font-weight:600;font-size:15px;color:var(--ink);}
+.formula-box .s{font-size:11px;color:var(--muted);margin-top:3px;}
+.fx{color:var(--accent);font-weight:700;flex:none;}
+.formula-foot{margin-top:16px;text-align:center;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;}
+
+.spec-grid{
+  margin-top:22px;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+}
+@media(max-width:560px){.spec-grid{grid-template-columns:repeat(2,1fr);}}
+.spec-cell{background:var(--surface);padding:16px 6px;text-align:center;}
+.spec-cell .v{font-family:'Shippori Mincho',serif;font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);}
+.spec-cell .k{font-size:10.5px;color:var(--muted);margin-top:4px;}
+.program-note{margin-top:22px;font-size:13.5px;color:var(--muted);}
+.program-subnote{margin-top:16px;font-size:12.5px;color:var(--muted);padding:14px 16px;background:var(--tint-2);border-radius:10px;}
+
+/* target */
+.target-list{max-width:440px;margin:30px auto 0;display:flex;flex-direction:column;gap:12px;}
+.target-list .row{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+.target-list .row svg{flex:none;width:18px;height:18px;stroke:var(--accent-ink);fill:none;stroke-width:2;margin-top:2px;}
+.target-list .row p{font-size:14px;text-align:left;}
+.soft-note{max-width:440px;margin:20px auto 0;font-size:12.5px;color:var(--muted);text-align:center;}
+
+/* price */
+.price-card{margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px 24px;}
+.price-main{display:flex;align-items:baseline;gap:8px;justify-content:center;}
+.price-main .n{font-family:'Shippori Mincho',serif;font-size:36px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;}
+.price-main .u{font-size:14px;color:var(--muted);}
+.price-tag{display:block;text-align:center;margin-top:8px;}
+.price-tag span{font-size:12px;color:var(--accent-ink);background:var(--accent-soft);border:1px solid var(--accent-soft-line);padding:3px 12px;border-radius:999px;}
+.price-rows{margin-top:22px;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:18px;}
+.price-row{display:flex;justify-content:space-between;font-size:13.5px;gap:12px;}
+.price-row .k{color:var(--muted);flex:none;}
+.price-row .v{text-align:right;}
+
+/* flow (cta steps) */
+.flow{margin-top:36px;display:flex;justify-content:center;gap:18px;}
+@media(max-width:560px){.flow{flex-direction:column;align-items:center;gap:26px;}}
+.flow-step{max-width:170px;text-align:center;}
+.flow-num{
+  width:46px;height:46px;border-radius:50%;border:1.5px solid var(--accent);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 12px;
+  font-family:'Shippori Mincho',serif;color:var(--accent);font-weight:700;font-size:16px;
+}
+.flow-step .t{font-weight:700;font-size:13.5px;margin-bottom:6px;color:var(--on-deep);}
+.flow-step .d{font-size:12px;color:var(--on-deep-muted);}
+.flow-arrow{display:flex;align-items:center;color:var(--accent);font-size:16px;}
+@media(max-width:560px){.flow-arrow{transform:rotate(90deg);}}
+
+.line-btn{
+  display:block;width:fit-content;margin:34px auto 0;
+  background:var(--accent);color:var(--deep-2);
+  font-weight:700;font-size:15px;
+  padding:14px 36px;border-radius:999px;text-decoration:none;
+  box-shadow:0 4px 14px rgba(0,0,0,.18);
+}
+.chat-bubble{
+  margin:30px auto 0;max-width:260px;
+  background:var(--surface);color:var(--ink);border-radius:16px 16px 16px 4px;
+  padding:16px 18px;font-size:14.5px;text-align:center;
+}
+.chat-hint{margin-top:10px;font-size:11.5px;color:var(--on-deep-muted);text-align:center;}
+.cta-note{margin-top:16px;font-size:12.5px;color:var(--on-deep-muted);text-align:center;max-width:340px;margin-inline:auto;}
+
+/* profile */
+.profile-name{font-size:17px;margin-bottom:4px;}
+.profile-role{font-size:12px;color:var(--muted);display:block;margin-bottom:20px;}
+.profile p.body{font-size:14px;color:var(--ink);}
+.profile p.body + p.body{margin-top:14px;}
+
+/* faq */
+details{
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;margin-bottom:10px;
+}
+summary{font-size:14px;font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;}
+summary::-webkit-details-marker{display:none;}
+summary::after{content:"+";color:var(--accent);font-weight:700;flex:none;}
+details[open] summary::after{content:"–";}
+details p{margin-top:12px;font-size:13px;color:var(--muted);}
+
+footer{padding-block:34px 50px;text-align:center;background:var(--paper);}
+footer .fh{font-family:'Shippori Mincho',serif;font-size:15px;margin-bottom:6px;}
+footer .fs{font-size:11.5px;color:var(--muted);}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-inner">
+    <span class="wordmark">ナラティブ設計伴走</span>
+    <a class="bar-cta" href="https://lin.ee/xxxxxxxx" target="_blank" rel="noopener">LINE登録</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow-row"><span class="dash"></span><span>NARRATIVE DESIGN PROGRAM</span><span class="dash"></span></div>
+    <div class="badge-icon">
+      <svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6.5"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+    </div>
+    <h1>同じような発信に、埋もれていませんか？<span class="line2">価格競争に巻き込まれない「ナラティブ」を、手に入れる。</span></h1>
+    <div class="meta-row">
+      <span><b>30,000円</b>（モニター価格）</span>
+      <span>申込締切 <b>9/30(水)</b></span>
+      <span>開始 <b>10月〜11月</b>（4週間で年内完走・個別調整可）</span>
+    </div>
+    <div class="target-pill">🌱 Skip Fで、すでに商品・サービスをお持ちの方への先行ご案内です</div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow-row"><span class="dash"></span><span>よくあるお悩み</span><span class="dash"></span></div>
+    <div class="badge-icon">
+      <svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 4V5z"/></svg>
+    </div>
+    <h2 class="title center">こんなお悩み、ありませんか？</h2>
+    <div class="pain-list">
+      <div class="pain-item"><span class="box"></span><p>同じようなサービスを発信するSNS起業家が増えて、自分らしさが埋もれてしまう</p></div>
+      <div class="pain-item"><span class="box"></span><p>「これを伝えていいのか」「需要がないのでは」と迷いながら発信している</p></div>
+      <div class="pain-item"><span class="box"></span><p>お客さんは増えても、一緒にブランドを育ててくれる応援者になってもらえている実感がない</p></div>
+    </div>
+  </section>
+
+  <section class="section tint">
+    <div class="eyebrow-row"><span class="dash"></span><span>WHAT IS NARRATIVE</span><span class="dash"></span></div>
+    <div class="badge-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M6 6l1.4 1.4M16.6 16.6L18 18M6 18l1.4-1.4M16.6 7.4L18 6"/><circle cx="12" cy="12" r="4"/></svg>
+    </div>
+    <h2 class="title center">そもそも、「ナラティブ」って何？</h2>
+    <p class="lead center">聞き慣れない言葉かもしれません。ここで一度、整理しておきます。ナラティブマーケティングとは、経験や価値観を一貫した「物語」として発信し、それによって選ばれる存在になっていくという考え方です。価格や機能だけでは差がつきにくい今、海外の大手企業のブランディングでも広く使われている手法です。同じような発信の中で埋もれてしまうか、選ばれる存在になれるか——その違いを生むのは、発信量やスキルではなく、この「ナラティブ」があるかどうかなんです。</p>
+
+    <div class="compare-wrap">
+      <div class="compare-card light">
+        <span class="k">STORY・点</span>
+        <div class="t">ストーリーだけだと</div>
+        <p class="d">一つひとつの投稿やエピソードは、それだけでは「点」。単発では、なんとなく良い話で終わってしまいます。</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="compare-card dark">
+        <span class="k">NARRATIVE・軸</span>
+        <div class="t">ナラティブがあると</div>
+        <p class="d">点と点をつなぐ「軸」ができる。これまでの経験も、今の選択も、これからの発信も、同じ一本の線でつながって見えます。</p>
+      </div>
+    </div>
+
+    <p class="explain-close">つまり「ナラティブがある」とは、バラバラなエピソードではなく、一本の線として自分を語れる状態のこと。しかもこの軸は、日々の発信やお客様とのやり取りを通じて、今この瞬間も育ち続けています。</p>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow-row"><span class="dash"></span><span>RESULTS</span><span class="dash"></span></div>
+    <div class="badge-icon">
+      <svg viewBox="0 0 24 24"><path d="M4 19V9M11 19V5M18 19v-7"/></svg>
+    </div>
+    <h2 class="title center">ナラティブが整うと、こう変わります</h2>
+    <div class="outcome-grid">
+      <div class="outcome"><div class="t">価格で比較されにくくなる</div><div class="d">値引き交渉が減ります</div></div>
+      <div class="outcome"><div class="t">紹介の質が上がる</div><div class="d">あなたの物語ごと、相手に伝わるようになります</div></div>
+      <div class="outcome"><div class="t">発信のたびに迷わなくなる</div><div class="d">判断のスピードが上がります</div></div>
+      <div class="outcome"><div class="t">顧客が離れにくくなる</div><div class="d">「この人となら自分は変われる」という、自分自身の未来に投資している状態になります</div></div>
+    </div>
+  </section>
+
+  <section class="section tint2">
+    <div class="eyebrow-row"><span class="dash"></span><span>PROGRAM</span><span class="dash"></span></div>
+    <div class="badge-icon">
+      <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+    </div>
+    <h2 class="title center">4週間、集中して伴走します</h2>
+    <p class="lead center">このプログラムで行うのは、ナラティブ構築の第一段階「過去の棚卸し（原体験の言語化）」です。</p>
+
+    <div class="formula-card">
+      <div class="formula-label">4週間で起きること</div>
+      <div class="formula-row">
+        <div class="formula-box"><div class="v">対話で聴く</div><div class="s">エピソードを掘り下げる</div></div>
+        <div class="fx">→</div>
+        <div class="formula-box"><div class="v">軸を見つける</div><div class="s">共通するパターンを言語化</div></div>
+        <div class="fx">→</div>
+        <div class="formula-box"><div class="v">言葉にする</div><div class="s">ナラティブとして整理</div></div>
+      </div>
+      <div class="formula-foot">対話の中でエピソードを掘り下げながら、あなたの中にある「一貫した軸」を言語化していきます。</div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-cell"><div class="v">4週間</div><div class="k">期間</div></div>
+      <div class="spec-cell"><div class="v">全4回</div><div class="k">セッション</div></div>
+      <div class="spec-cell"><div class="v">90分</div><div class="k">1回あたり</div></div>
+      <div class="spec-cell"><div class="v">3回</div><div class="k">宿題</div></div>
+      <div class="spec-cell"><div class="v">対話</div><div class="k">オンライン</div></div>
+    </div>
+    <p class="program-note">この「聴く」進め方は、企業のマーケティングリサーチで、何千人もの本音を一対一でじっくり聴いてきた経験がベースになっています。感覚や思いつきで終わらせず、根拠を持って語れる、実利につながるナラティブに育てていきます。</p>
+    <p class="program-subnote">※このプログラムは、ナラティブ構築の第一段階にあたる部分です。続く「今の状況を発信に落とし込む」「お客さまを巻き込みながらブランドを育てる」という部分は、本編のリブランディング（4ヶ月プログラム）で扱っていきます。</p>
+  </section>
+
+  <section class="section tint" id="cta">
+    <div class="eyebrow-row"><span class="dash"></span><span>PRICE</span><span class="dash"></span></div>
+    <h2 class="title center">料金・お申し込み</h2>
+    <div class="price-card">
+      <div class="price-main"><span class="n">30,000</span><span class="u">円</span></div>
+      <div class="price-tag"><span>モニター価格</span></div>
+      <div class="price-rows">
+        <div class="price-row"><span class="k">開始時期</span><span class="v">10月〜11月でスタート（4週間で年内完走。日程は個別に調整します）</span></div>
+        <div class="price-row"><span class="k">申込締切</span><span class="v">9月30日（水）</span></div>
+        <div class="price-row"><span class="k">説明会</span><span class="v">なし（直接お申し込み）</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section deep">
+    <div class="eyebrow-row"><span class="dash"></span><span>HOW TO APPLY</span><span class="dash"></span></div>
+    <h2 class="title center">ご案内は、LINEでお届けします</h2>
+    <p class="lead center">下のボタンからLINEに登録して、トーク画面に「ナラティブ」と送ってください。詳しいご案内が届きます。</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <div class="t">LINE登録</div>
+        <div class="d">下のボタンから、友だち追加してください</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <div class="t">「ナラティブ」と送る</div>
+        <div class="d">トーク画面にキーワードを送ってください</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <div class="t">ご案内が届く</div>
+        <div class="d">プログラムの詳細とお申し込み方法をお届けします</div>
+      </div>
+    </div>
+
+    <a class="line-btn" href="https://lin.ee/xxxxxxxx" target="_blank" rel="noopener">LINE登録はこちら</a>
+    <p class="cta-note">「興味はあるけど、合うか相談したい」という方も、登録後にメッセージいただければ大丈夫です。</p>
+  </section>
+
+  <section class="section profile">
+    <div class="eyebrow-row"><span class="dash"></span><span>ABOUT ME</span><span class="dash"></span></div>
+    <h2 class="title center profile-name">おつね</h2>
+    <span class="profile-role center" style="display:block;text-align:center;">マーケティングリサーチャー／リブランディングコンサルタント</span>
+    <p class="body">マーケティングの仕事に13年携わり、その中でも8年間、大手企業向けのマーケティングリサーチを専門にしてきました。コカ・コーラやKIRINといった飲料メーカー、GSKや3Mのような製薬・生活用品の大手企業、アウトドアブランドColemanを展開するGoldwin、Amazon Musicまで——業界を問わず、企業の"数字にならない声"を可視化する仕事をしてきました。慶應義塾大学でMBAを取得。</p>
+    <p class="body">大企業であればあるほど、顧客の声を大切にしています。マーケティングリサーチなしに新商品をローンチするなんてありえない——それくらい当たり前に「聴いてから作る」世界にいました。個人で事業をされている方と向き合うようになって気づいたのは、多くの方が「顧客の声」だけでなく、「自分自身の声」にも丁寧に耳を傾ける機会を持てていないということ。だからこのプログラムでは、顧客理解の手前にある、あなた自身の物語を聴くところから始めます。</p>
+  </section>
+
+  <section class="section tint2">
+    <div class="eyebrow-row"><span class="dash"></span><span>FAQ</span><span class="dash"></span></div>
+    <h2 class="title center">よくある質問</h2>
+
+    <details>
+      <summary>今の状態でも受けて大丈夫ですか？</summary>
+      <p>すでに商品やサービスがあり、発信をされている方であれば大丈夫です。売上の状況に関わらず、「このままの発信を続けていいのか、迷いながら進めている」という方に向いています。</p>
+    </details>
+
+    <details>
+      <summary>忙しくて時間が取れるか心配です</summary>
+      <p>4週間で計4回、1回90分のセッション形式です。宿題も各回1つずつなので、日々の業務と並行して進めていただけます。ご都合が合わない場合は期間の延長も可能ですので、スケジュールについてもご相談しながら進めましょう。</p>
+    </details>
+
+    <details>
+      <summary>Fのコンセプトメーカーや自分史ワークと何が違うんですか？</summary>
+      <p>Fのコンセプトメーカー等は、入力した材料をコンセプトという形に整える工程です。このプログラムは、その一歩手前——材料そのものを、対話を通じて掘り下げていく工程にあたります。すでに取り組んだワークがあれば、それを土台にしてさらに深めていくこともできます。</p>
+    </details>
+
+    <details>
+      <summary>「モニター価格」とありますが、何のモニターですか？</summary>
+      <p>今回は、プログラムの型を実際に試していただく最初の回として、モニター価格でご案内しています。今後、本編にあたるフルパッケージ（4ヶ月・自己理解×顧客理解）は50万円での正規ローンチを予定しているので、今回はその入り口部分を、通常よりかなり抑えた価格で体験いただける機会になっています。率直なご感想やフィードバックをいただける方を歓迎しています。</p>
+    </details>
+  </section>
+
+  <footer>
+    <div class="fh">ナラティブ設計伴走プログラム</div>
+    <div class="fs">Skip F ｜ おつね</div>
+  </footer>
+
+</div>
+</body>
+</html>
