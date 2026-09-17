@@ -213,6 +213,37 @@ h2.title{font-size:clamp(21px,5vw,26px);margin-bottom:14px;}
 .target-list .row p{font-size:14px;text-align:left;}
 .soft-note{max-width:440px;margin:20px auto 0;font-size:12.5px;color:var(--muted);text-align:center;}
 
+/* scroll hint */
+.scroll-hint{margin-top:22px;font-size:12px;}
+.scroll-hint a{color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--line);padding-bottom:2px;}
+
+/* connected chain (narrative axis visual) */
+.chain{margin-top:4px;display:flex;flex-direction:column;}
+.chain-step{display:flex;gap:12px;align-items:flex-start;position:relative;padding-bottom:18px;}
+.chain-step:last-child{padding-bottom:0;}
+.chain-step .dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--accent);margin-top:5px;position:relative;}
+.chain-step:not(:last-child) .dot::after{content:"";position:absolute;top:13px;left:3.5px;width:1px;height:26px;background:rgba(255,255,255,.28);}
+.chain-step .body{flex:1;}
+.chain-step .t{font-weight:700;font-size:13px;color:var(--on-deep);margin-bottom:2px;}
+.chain-step .d{font-size:11.5px;color:var(--on-deep-muted);}
+
+/* numbered benefit list */
+.benefit-list{margin-top:30px;display:flex;flex-direction:column;gap:14px;}
+.benefit-row{display:flex;gap:18px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;}
+.num-badge{flex:none;font-family:'Shippori Mincho',serif;font-size:22px;font-weight:800;color:var(--accent-ink);opacity:.55;line-height:1;}
+.benefit-row .body{flex:1;}
+.benefit-row .t{font-weight:700;font-size:14.5px;color:var(--ink);margin-bottom:5px;}
+.benefit-row .d{font-size:12.5px;color:var(--muted);}
+
+/* step list (4-week mechanics) */
+.step-list{margin-top:26px;display:flex;flex-direction:column;gap:2px;}
+.step-row{display:flex;gap:16px;align-items:flex-start;padding:16px 2px;border-bottom:1px solid var(--line);}
+.step-row:last-child{border-bottom:none;}
+.step-row .badge{flex:none;width:42px;height:42px;border-radius:50%;background:var(--tint);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Shippori Mincho',serif;font-weight:700;font-size:12px;color:var(--ink);}
+.step-row .body{flex:1;}
+.step-row .t{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:4px;}
+.step-row .d{font-size:12.5px;color:var(--muted);}
+
 /* price */
 .price-card{margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px 24px;}
 .price-main{display:flex;align-items:baseline;gap:8px;justify-content:center;}
@@ -301,19 +332,23 @@ footer .fs{font-size:11.5px;color:var(--muted);}
       <span>開始 <b>10月〜11月</b>（4週間で年内完走・個別調整可）</span>
     </div>
     <div class="target-pill">🌱 Skip Fで、すでに商品・サービスをお持ちの方への先行ご案内です</div>
+    <div class="scroll-hint"><a href="#feel">↓ くわしく見てみる</a></div>
   </section>
 
-  <section class="section">
-    <div class="eyebrow-row"><span class="dash"></span><span>よくあるお悩み</span><span class="dash"></span></div>
+  <section class="section" id="feel">
+    <div class="eyebrow-row"><span class="dash"></span><span>FEELS FAMILIAR?</span><span class="dash"></span></div>
     <div class="badge-icon">
       <svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 4V5z"/></svg>
     </div>
-    <h2 class="title center">こんなお悩み、ありませんか？</h2>
+    <h2 class="title center">こんなこと、感じていませんか？</h2>
+    <p class="lead center">同じようなサービスが増えていく中で、ふと立ち止まって、こんな風に感じることはありませんか。</p>
     <div class="pain-list">
       <div class="pain-item"><span class="box"></span><p>同じようなサービスを発信するSNS起業家が増えて、自分らしさが埋もれてしまう</p></div>
       <div class="pain-item"><span class="box"></span><p>「これを伝えていいのか」「需要がないのでは」と迷いながら発信している</p></div>
       <div class="pain-item"><span class="box"></span><p>お客さんは増えても、一緒にブランドを育ててくれる応援者になってもらえている実感がない</p></div>
+      <div class="pain-item"><span class="box"></span><p>正直、「このサービスを、なぜ自分がやらなきゃいけないのか」がうまく言葉にできない</p></div>
     </div>
+    <p class="explain-close">一つひとつは小さな違和感でも、根っこにあるのは同じこと。あなたと、あなたのサービスをつなぐ「軸」が、まだ言葉になっていないだけなのかもしれません。</p>
   </section>
 
   <section class="section tint">
@@ -321,8 +356,16 @@ footer .fs{font-size:11.5px;color:var(--muted);}
     <div class="badge-icon">
       <svg viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M6 6l1.4 1.4M16.6 16.6L18 18M6 18l1.4-1.4M16.6 7.4L18 6"/><circle cx="12" cy="12" r="4"/></svg>
     </div>
-    <h2 class="title center">そもそも、「ナラティブ」って何？</h2>
-    <p class="lead center">聞き慣れない言葉かもしれません。ここで一度、整理しておきます。ナラティブマーケティングとは、経験や価値観を一貫した「物語」として発信し、それによって選ばれる存在になっていくという考え方です。価格や機能だけでは差がつきにくい今、海外の大手企業のブランディングでも広く使われている手法です。同じような発信の中で埋もれてしまうか、選ばれる存在になれるか——その違いを生むのは、発信量やスキルではなく、この「ナラティブ」があるかどうかなんです。</p>
+    <h2 class="title center">ナラティブって、一言でいうと<br>「あなただから」の理由があることです。</h2>
+    <p class="lead center">同じようなサービスを届けていても、なぜかこの人にお願いしたくなる。その「なぜあなたなのか」を、一緒に言葉にしていきます。</p>
+  </section>
+
+  <section class="section tint2">
+    <div class="eyebrow-row"><span class="dash"></span><span>WHY NOW</span><span class="dash"></span></div>
+    <div class="badge-icon">
+      <svg viewBox="0 0 24 24"><path d="M4 19V9M11 19V5M18 19v-7"/></svg>
+    </div>
+    <h2 class="title center">なぜ今、ナラティブが必要なの？</h2>
 
     <div class="compare-wrap">
       <div class="compare-card light">
@@ -334,45 +377,44 @@ footer .fs{font-size:11.5px;color:var(--muted);}
       <div class="compare-card dark">
         <span class="k">NARRATIVE・軸</span>
         <div class="t">ナラティブがあると</div>
-        <p class="d">点と点をつなぐ「軸」ができる。これまでの経験も、今の選択も、これからの発信も、同じ一本の線でつながって見えます。</p>
+        <div class="chain">
+          <div class="chain-step"><span class="dot"></span><div class="body"><div class="t">原体験</div><div class="d">あなたが、その道に足を踏み入れたきっかけ</div></div></div>
+          <div class="chain-step"><span class="dot"></span><div class="body"><div class="t">気づき</div><div class="d">続ける中で見えてきた、大切にしたいこと</div></div></div>
+          <div class="chain-step"><span class="dot"></span><div class="body"><div class="t">選択</div><div class="d">今のサービス・届け方を選んだ理由</div></div></div>
+          <div class="chain-step"><span class="dot"></span><div class="body"><div class="t">今</div><div class="d">お客様に届けている、今のあなたの姿</div></div></div>
+        </div>
       </div>
     </div>
 
-    <p class="explain-close">つまり「ナラティブがある」とは、バラバラなエピソードではなく、一本の線として自分を語れる状態のこと。しかもこの軸は、日々の発信やお客様とのやり取りを通じて、今この瞬間も育ち続けています。複雑な経験や背景を抱えている方ほど、実は「なぜ他の誰でもなく、あなたがこのサービスを届けるのか」という、強いナラティブの種を持っています。</p>
+    <p class="explain-close">点と点がつながって一本の軸になると、これまでの経験も、今の選択も、これからの発信も、同じ物語として伝わるようになります。実はこの考え方自体は目新しいものではなく、海外の大手企業のブランディングでも、何十年も前から使われてきた手法です。個人で発信する私たちにも、同じ原理が使えます。</p>
   </section>
 
   <section class="section">
-    <div class="eyebrow-row"><span class="dash"></span><span>RESULTS</span><span class="dash"></span></div>
+    <div class="eyebrow-row"><span class="dash"></span><span>WHAT YOU GET</span><span class="dash"></span></div>
     <div class="badge-icon">
-      <svg viewBox="0 0 24 24"><path d="M4 19V9M11 19V5M18 19v-7"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.3 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>
     </div>
-    <h2 class="title center">ナラティブが整うと、こう変わります</h2>
-    <div class="outcome-grid">
-      <div class="outcome"><div class="t">価格で比較されにくくなる</div><div class="d">値引き交渉が減ります</div></div>
-      <div class="outcome"><div class="t">紹介の質が上がる</div><div class="d">あなたの物語ごと、相手に伝わるようになります</div></div>
-      <div class="outcome"><div class="t">発信のたびに迷わなくなる</div><div class="d">判断のスピードが上がります</div></div>
-      <div class="outcome"><div class="t">顧客が離れにくくなる</div><div class="d">「この人となら自分は変われる」という、自分自身の未来に投資している状態になります</div></div>
+    <h2 class="title center">このプログラムで手に入れるもの</h2>
+    <div class="benefit-list">
+      <div class="benefit-row"><span class="num-badge">01</span><div class="body"><div class="t">価格で比較されなくなる</div><div class="d">値引き交渉に巻き込まれず、「あなたにお願いしたい」で選ばれるようになります</div></div></div>
+      <div class="benefit-row"><span class="num-badge">02</span><div class="body"><div class="t">発信のたびに迷わなくなる</div><div class="d">何を書くか、どう見せるかで悩む時間が減り、判断のスピードが上がります</div></div></div>
+      <div class="benefit-row"><span class="num-badge">03</span><div class="body"><div class="t">顧客が離れにくくなる</div><div class="d">「この人となら自分は変われる」という、お客様自身の未来への投資に変わります</div></div></div>
     </div>
   </section>
 
   <section class="section tint2">
-    <div class="eyebrow-row"><span class="dash"></span><span>PROGRAM</span><span class="dash"></span></div>
+    <div class="eyebrow-row"><span class="dash"></span><span>HOW IT WORKS</span><span class="dash"></span></div>
     <div class="badge-icon">
       <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
     </div>
-    <h2 class="title center">4週間、集中して伴走します</h2>
+    <h2 class="title center">4週間で何をするの？</h2>
     <p class="lead center">このプログラムで行うのは、ナラティブ構築の第一段階「過去の棚卸し（原体験の言語化）」です。</p>
 
-    <div class="formula-card">
-      <div class="formula-label">4週間で起きること</div>
-      <div class="formula-row">
-        <div class="formula-box"><div class="v">対話で聴く</div><div class="s">エピソードを掘り下げる</div></div>
-        <div class="fx">→</div>
-        <div class="formula-box"><div class="v">軸を見つける</div><div class="s">共通するパターンを言語化</div></div>
-        <div class="fx">→</div>
-        <div class="formula-box"><div class="v">言葉にする</div><div class="s">ナラティブとして整理</div></div>
-      </div>
-      <div class="formula-foot">対話の中でエピソードを掘り下げながら、あなたの中にある「一貫した軸」を言語化していきます。</div>
+    <div class="step-list">
+      <div class="step-row"><span class="badge">01</span><div class="body"><div class="t">原体験を聴く</div><div class="d">対話を通じて、これまでの経験やエピソードを一つひとつ掘り下げます</div></div></div>
+      <div class="step-row"><span class="badge">02</span><div class="body"><div class="t">共通する軸を見つける</div><div class="d">点在するエピソードから、繰り返し現れるパターンを言語化します</div></div></div>
+      <div class="step-row"><span class="badge">03</span><div class="body"><div class="t">ナラティブとして整える</div><div class="d">見つかった軸を、伝わる言葉・構成に整理します</div></div></div>
+      <div class="step-row"><span class="badge">04</span><div class="body"><div class="t">発信に使える形にする</div><div class="d">実際の投稿やプロフィールに落とし込めるところまで仕上げます</div></div></div>
     </div>
 
     <div class="spec-grid">
@@ -386,9 +428,33 @@ footer .fs{font-size:11.5px;color:var(--muted);}
     <p class="program-subnote">※このプログラムは、ナラティブ構築の第一段階にあたる部分です。続く「今の状況を発信に落とし込む」「お客さまを巻き込みながらブランドを育てる」という部分は、本編のリブランディング（4ヶ月プログラム）で扱っていきます。</p>
   </section>
 
-  <section class="section tint" id="cta">
-    <div class="eyebrow-row"><span class="dash"></span><span>PRICE</span><span class="dash"></span></div>
-    <h2 class="title center">料金・お申し込み</h2>
+  <section class="section profile">
+    <div class="eyebrow-row"><span class="dash"></span><span>ABOUT ME</span><span class="dash"></span></div>
+    <h2 class="title center">なぜ、私が「ナラティブ」を設計するのか</h2>
+    <span class="profile-role center" style="display:block;text-align:center;">おつね｜マーケティングリサーチャー／リブランディングコンサルタント</span>
+    <p class="body">マーケティングの仕事に15年ほど携わり、その中でも8年間、大手企業向けのマーケティングリサーチを専門にしてきました。コカ・コーラやKIRINといった飲料メーカー、GSKや3Mのような製薬・生活用品の大手企業、アウトドアブランドColemanを展開するGoldwin、Amazon Musicまで——業界を問わず、企業の"数字にならない声"を可視化する仕事をしてきました。慶應義塾大学でMBAを取得。</p>
+    <p class="body">大企業であればあるほど、顧客の声を大切にしています。マーケティングリサーチなしに新商品をローンチするなんてありえない——それくらい当たり前に「聴いてから作る」世界にいました。個人で事業をされている方と向き合うようになって気づいたのは、多くの方が「顧客の声」だけでなく、「自分自身の声」にも丁寧に耳を傾ける機会を持てていないということ。だからこのプログラムでは、顧客理解の手前にある、あなた自身の物語を聴くところから始めます。</p>
+    <p class="body">「なぜ、あなたなのか。」——その答えを一緒に探すのが、私の役目だと思っています。</p>
+  </section>
+
+  <section class="section tint">
+    <div class="eyebrow-row"><span class="dash"></span><span>WHO THIS IS FOR</span><span class="dash"></span></div>
+    <div class="badge-icon">
+      <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <h2 class="title center">こんな方におすすめです</h2>
+    <div class="target-list">
+      <div class="row"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><p>すでに商品・サービスを持っていて、発信を続けている方</p></div>
+      <div class="row"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><p>同じような発信の中で、自分らしさが埋もれている気がする方</p></div>
+      <div class="row"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><p>「なぜ自分がこれをやるのか」を、腹落ちする言葉で語れるようになりたい方</p></div>
+      <div class="row"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><p>目先のテクニックより、土台からブランドを育てたい方</p></div>
+    </div>
+    <p class="soft-note">※現時点でフォロワー数や実績は問いません。すでに一歩を踏み出している方であれば大丈夫です。</p>
+  </section>
+
+  <section class="section tint2" id="cta">
+    <div class="eyebrow-row"><span class="dash"></span><span>PROGRAM &amp; PRICE</span><span class="dash"></span></div>
+    <h2 class="title center">プログラム概要・料金</h2>
     <div class="price-card">
       <div class="price-main"><span class="n">30,000</span><span class="u">円</span></div>
       <div class="price-tag"><span>モニター価格</span></div>
@@ -398,46 +464,10 @@ footer .fs{font-size:11.5px;color:var(--muted);}
         <div class="price-row"><span class="k">説明会</span><span class="v">なし（直接お申し込み）</span></div>
       </div>
     </div>
+    <a class="line-btn" href="https://line-harness.otsune-line-harness.workers.dev/r/narrative" target="_blank" rel="noopener">LINEで詳細を確認する</a>
   </section>
 
-  <section class="section deep">
-    <div class="eyebrow-row"><span class="dash"></span><span>HOW TO APPLY</span><span class="dash"></span></div>
-    <h2 class="title center">ご案内は、LINEでお届けします</h2>
-    <p class="lead center">下のボタンからLINEに登録して、トーク画面に「ナラティブ」と送ってください。詳しいご案内が届きます。</p>
-
-    <div class="flow">
-      <div class="flow-step">
-        <div class="flow-num">01</div>
-        <div class="t">LINE登録</div>
-        <div class="d">下のボタンから、友だち追加してください</div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="flow-num">02</div>
-        <div class="t">「ナラティブ」と送る</div>
-        <div class="d">トーク画面にキーワードを送ってください</div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="flow-num">03</div>
-        <div class="t">ご案内が届く</div>
-        <div class="d">プログラムの詳細とお申し込み方法をお届けします</div>
-      </div>
-    </div>
-
-    <a class="line-btn" href="https://line-harness.otsune-line-harness.workers.dev/r/narrative" target="_blank" rel="noopener">LINE登録はこちら</a>
-    <p class="cta-note">「興味はあるけど、合うか相談したい」という方も、登録後にメッセージいただければ大丈夫です。</p>
-  </section>
-
-  <section class="section profile">
-    <div class="eyebrow-row"><span class="dash"></span><span>ABOUT ME</span><span class="dash"></span></div>
-    <h2 class="title center profile-name">おつね</h2>
-    <span class="profile-role center" style="display:block;text-align:center;">マーケティングリサーチャー／リブランディングコンサルタント</span>
-    <p class="body">マーケティングの仕事に13年携わり、その中でも8年間、大手企業向けのマーケティングリサーチを専門にしてきました。コカ・コーラやKIRINといった飲料メーカー、GSKや3Mのような製薬・生活用品の大手企業、アウトドアブランドColemanを展開するGoldwin、Amazon Musicまで——業界を問わず、企業の"数字にならない声"を可視化する仕事をしてきました。慶應義塾大学でMBAを取得。</p>
-    <p class="body">大企業であればあるほど、顧客の声を大切にしています。マーケティングリサーチなしに新商品をローンチするなんてありえない——それくらい当たり前に「聴いてから作る」世界にいました。個人で事業をされている方と向き合うようになって気づいたのは、多くの方が「顧客の声」だけでなく、「自分自身の声」にも丁寧に耳を傾ける機会を持てていないということ。だからこのプログラムでは、顧客理解の手前にある、あなた自身の物語を聴くところから始めます。</p>
-  </section>
-
-  <section class="section tint2">
+  <section class="section">
     <div class="eyebrow-row"><span class="dash"></span><span>FAQ</span><span class="dash"></span></div>
     <h2 class="title center">よくある質問</h2>
 
@@ -460,6 +490,40 @@ footer .fs{font-size:11.5px;color:var(--muted);}
       <summary>「モニター価格」とありますが、何のモニターですか？</summary>
       <p>今回は、プログラムの型を実際に試していただく最初の回として、モニター価格でご案内しています。今後、本編にあたるフルパッケージ（4ヶ月・自己理解×顧客理解）は50万円での正規ローンチを予定しているので、今回はその入り口部分を、通常よりかなり抑えた価格で体験いただける機会になっています。率直なご感想やフィードバックをいただける方を歓迎しています。</p>
     </details>
+
+    <details>
+      <summary>お支払い方法を教えてください</summary>
+      <p>銀行振込でご案内しています。お申し込み後、LINEにて振込先をお伝えしますので、そちらにお振込みください。</p>
+    </details>
+  </section>
+
+  <section class="section deep">
+    <div class="eyebrow-row"><span class="dash"></span><span>LET'S START</span><span class="dash"></span></div>
+    <h2 class="title center">ご案内は、LINEでお届けします</h2>
+    <p class="lead center">「なぜ、あなたなのか。」——その答えは、案外あなた自身が一番気づいていないものです。下のボタンからLINEに登録して、一緒に言葉にしていきましょう。</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <div class="t">LINE登録</div>
+        <div class="d">下のボタンから、友だち追加してください</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <div class="t">「ナラティブ」と送る</div>
+        <div class="d">トーク画面にキーワードを送ってください</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <div class="t">ご案内が届く</div>
+        <div class="d">プログラムの詳細とお申し込み方法をお届けします</div>
+      </div>
+    </div>
+
+    <a class="line-btn" href="https://line-harness.otsune-line-harness.workers.dev/r/narrative" target="_blank" rel="noopener">LINEで「ナラティブ」と送る</a>
+    <p class="cta-note">「興味はあるけど、合うか相談したい」という方も、登録後にメッセージいただければ大丈夫です。</p>
   </section>
 
   <footer>
